@@ -1,0 +1,857 @@
+{
+  "provider": "gemini",
+  "model": "gemini-flash-lite-latest",
+  "is_mock": false,
+  "data_source": "manual_screenshot_transcription",
+  "notice": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.",
+  "runs": [
+    {
+      "id": "TC01",
+      "query": "Tổng hợp kênh ngày 2026-09-13: chủ đề chính, hướng dẫn đã xác nhận, câu hỏi còn mở.",
+      "status": "SUCCESS",
+      "answer": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.\n\nTổng hợp kênh ngày 2026-09-13 (00:08–12:31):\n\n- **Chủ đề chính**: Thảo luận về gia hạn hạn nộp Lab2 [demo_msg_001], lịch học/mã lịch khác nhau giữa các email [demo_msg_007], cách đăng nhập Zoom tham gia workshop [demo_msg_011], và câu lạc bộ thể thao/tiện ích học viên [demo_msg_005, demo_msg_015].\n- **Hướng dẫn đã xác nhận**: \n  - Gửi ticket qua vlearn-support khi nộp Lab2 muộn [demo_msg_003].\n  - Theo dõi lịch học có chữ \"UPDATED\" [demo_msg_010].\n  - Dùng email cá nhân để vào Zoom workshop [demo_msg_012].\n  - Xem bài viết về các tiện ích học viên trên Facebook [demo_msg_014].\n- **Câu hỏi còn mở**: \n  - Lab2 có được gia hạn thời gian nộp hay không (kết quả xử lý ticket chưa được xác nhận) [demo_msg_001, demo_msg_003].\n  - Thông tin thành lập CLB trên group Facebook đã xin phép trường hay chưa [demo_msg_015].",
+      "events": [
+        {
+          "step": 1,
+          "action_type": "LLM_RESPONSE",
+          "latency_ms": 868.92,
+          "usage": {
+            "input_tokens": 549,
+            "output_tokens": 25
+          },
+          "tool_count": 1
+        },
+        {
+          "step": 1,
+          "action_type": "TOOL_EXECUTION",
+          "tool_name": "read_day",
+          "arguments": {
+            "day": "2026-09-13"
+          },
+          "observation": {
+            "status": "SUCCESS",
+            "day": "2026-09-13",
+            "source": "manual_screenshot_transcription",
+            "complete": false,
+            "coverage_start": "2026-09-13T00:08:00+07:00",
+            "coverage_end": "2026-09-13T12:31:00+07:00",
+            "messages": [
+              {
+                "id": "demo_msg_001",
+                "author": "T068-NGÔ ANH TÚ-02396",
+                "timestamp": "2026-09-13T00:08:00+07:00",
+                "content": "cho em hỏi Lab2 có được extend thời gian submit thêm không v ạ? Em lỡ nộp muộn 1phút không submit bài được ạ",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_002",
+                "author": "T048-NGUYỄN HUY HÙNG-02990",
+                "timestamp": "2026-09-13T00:09:00+07:00",
+                "content": "hic mình cũng thế",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_003",
+                "author": "Lab Coach — Sang Phan",
+                "timestamp": "2026-09-13T00:21:00+07:00",
+                "content": "Hùng với Tú chịu khó vào chỗ vlearn-support gửi ticket nhé",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_004",
+                "author": "T048-NGUYỄN HUY HÙNG-02990",
+                "timestamp": "2026-09-13T00:25:00+07:00",
+                "content": "dạ anh",
+                "reply_to": "demo_msg_003"
+              },
+              {
+                "id": "demo_msg_005",
+                "author": "T117-PHẠM THÀNH TRUNG-02949",
+                "timestamp": "2026-09-13T00:38:00+07:00",
+                "content": "Mình có group xin tập gym hay tham gia bơi ở trường k ạ ?",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_006",
+                "author": "T003-TRẦN THANH THÁI-02454",
+                "timestamp": "2026-09-13T08:55:00+07:00",
+                "content": ".",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_007",
+                "author": "T132-BÙI TRỌNG TRỊNH-02861",
+                "timestamp": "2026-09-13T09:05:00+07:00",
+                "content": "@Nguyen Hai Dang Cho mình hỏi là: Email cá nhân nhận lịch mã số 02, sau đó nhận thêm mã số 03. Còn email outlook thì ngược lại nhận lịch mã số 03, sau đó nhận mã số 02. Vậy mình nên học theo lịch nào?",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_008",
+                "author": "T056-NGUYỄN ĐÌNH KHANG-02584",
+                "timestamp": "2026-09-13T09:12:00+07:00",
+                "content": "Bạn dùng lịch có chữ UPDATED á",
+                "reply_to": "demo_msg_007"
+              },
+              {
+                "id": "demo_msg_009",
+                "author": "T132-BÙI TRỌNG TRỊNH-02861",
+                "timestamp": "2026-09-13T09:14:00+07:00",
+                "content": "lịch outlook có chữ updated nhưng ngày 10/9, lịch trong gmail ko có nhưng gửi ngày 11/9, vậy thì theo lịch này vậy ạ",
+                "reply_to": "demo_msg_008"
+              },
+              {
+                "id": "demo_msg_010",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T10:07:00+07:00",
+                "content": "theo updated nhé Trịnh",
+                "reply_to": "demo_msg_009"
+              },
+              {
+                "id": "demo_msg_011",
+                "author": "T097-PHÙNG THÀNH AN-03006",
+                "timestamp": "2026-09-13T10:19:00+07:00",
+                "content": "e đăng nhập vào zoom để tối nay workshop mà cứ báo như này thì tối e đăng nhập bằng mail cá nhân rồi đổi tên theo quy định được không ạ? hay có cách nào để khắc phục lỗi này k ạ",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_012",
+                "author": "Vonhatcuong",
+                "timestamp": "2026-09-13T10:24:00+07:00",
+                "content": "Vào bằng mail cá nhân nhé không dùng mail của trường đâu nha\nmai cá nhân các bạn dùng để nhận mail của trường ấy",
+                "reply_to": "demo_msg_011"
+              },
+              {
+                "id": "demo_msg_013",
+                "author": "T042-NGUYỄN MẠNH CƯỜNG-02650",
+                "timestamp": "2026-09-13T12:13:00+07:00",
+                "content": "em ké câu hỏi ạ",
+                "reply_to": "demo_msg_005"
+              },
+              {
+                "id": "demo_msg_014",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T12:23:00+07:00",
+                "content": "k nhá Cường ơi, Cường xem bài các tiện ích học viên trên fb nhé",
+                "reply_to": "demo_msg_013"
+              },
+              {
+                "id": "demo_msg_015",
+                "author": "T042-NGUYỄN MẠNH CƯỜNG-02650",
+                "timestamp": "2026-09-13T12:26:00+07:00",
+                "content": "em thấy trước có bạn nào đăng bài gr fb có thông tin là thành lập clb là xin phép với bên trường là thông tin chính xác không ạ",
+                "reply_to": "demo_msg_014"
+              },
+              {
+                "id": "demo_msg_016",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T12:31:00+07:00",
+                "content": "k nhá, có btc rep ở dưới bài đó rùi nè",
+                "reply_to": "demo_msg_015"
+              }
+            ]
+          },
+          "latency_ms": 0.46
+        },
+        {
+          "step": 2,
+          "action_type": "LLM_RESPONSE",
+          "latency_ms": 1792.35,
+          "usage": {
+            "input_tokens": 2252,
+            "output_tokens": 304
+          },
+          "tool_count": 0
+        },
+        {
+          "step": 2,
+          "action_type": "FINAL_ANSWER",
+          "output": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.\n\nTổng hợp kênh ngày 2026-09-13 (00:08–12:31):\n\n- **Chủ đề chính**: Thảo luận về gia hạn hạn nộp Lab2 [demo_msg_001], lịch học/mã lịch khác nhau giữa các email [demo_msg_007], cách đăng nhập Zoom tham gia workshop [demo_msg_011], và câu lạc bộ thể thao/tiện ích học viên [demo_msg_005, demo_msg_015].\n- **Hướng dẫn đã xác nhận**: \n  - Gửi ticket qua vlearn-support khi nộp Lab2 muộn [demo_msg_003].\n  - Theo dõi lịch học có chữ \"UPDATED\" [demo_msg_010].\n  - Dùng email cá nhân để vào Zoom workshop [demo_msg_012].\n  - Xem bài viết về các tiện ích học viên trên Facebook [demo_msg_014].\n- **Câu hỏi còn mở**: \n  - Lab2 có được gia hạn thời gian nộp hay không (kết quả xử lý ticket chưa được xác nhận) [demo_msg_001, demo_msg_003].\n  - Thông tin thành lập CLB trên group Facebook đã xin phép trường hay chưa [demo_msg_015].",
+          "source_ids": [
+            "demo_msg_001",
+            "demo_msg_003",
+            "demo_msg_005",
+            "demo_msg_007",
+            "demo_msg_010",
+            "demo_msg_011",
+            "demo_msg_012",
+            "demo_msg_014",
+            "demo_msg_015"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "TC02",
+      "query": "Ngày 2026-09-13, nên theo lịch UPDATED hay email gửi sau?",
+      "status": "SUCCESS",
+      "answer": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.\n\nTheo dữ liệu ngày 2026-09-13, Lab Coach Hoàng Blue's đã hướng dẫn nên theo lịch có chữ \"UPDATED\" [demo_msg_010].",
+      "events": [
+        {
+          "step": 1,
+          "action_type": "LLM_RESPONSE",
+          "latency_ms": 885.92,
+          "usage": {
+            "input_tokens": 541,
+            "output_tokens": 25
+          },
+          "tool_count": 1
+        },
+        {
+          "step": 1,
+          "action_type": "TOOL_EXECUTION",
+          "tool_name": "read_day",
+          "arguments": {
+            "day": "2026-09-13"
+          },
+          "observation": {
+            "status": "SUCCESS",
+            "day": "2026-09-13",
+            "source": "manual_screenshot_transcription",
+            "complete": false,
+            "coverage_start": "2026-09-13T00:08:00+07:00",
+            "coverage_end": "2026-09-13T12:31:00+07:00",
+            "messages": [
+              {
+                "id": "demo_msg_001",
+                "author": "T068-NGÔ ANH TÚ-02396",
+                "timestamp": "2026-09-13T00:08:00+07:00",
+                "content": "cho em hỏi Lab2 có được extend thời gian submit thêm không v ạ? Em lỡ nộp muộn 1phút không submit bài được ạ",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_002",
+                "author": "T048-NGUYỄN HUY HÙNG-02990",
+                "timestamp": "2026-09-13T00:09:00+07:00",
+                "content": "hic mình cũng thế",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_003",
+                "author": "Lab Coach — Sang Phan",
+                "timestamp": "2026-09-13T00:21:00+07:00",
+                "content": "Hùng với Tú chịu khó vào chỗ vlearn-support gửi ticket nhé",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_004",
+                "author": "T048-NGUYỄN HUY HÙNG-02990",
+                "timestamp": "2026-09-13T00:25:00+07:00",
+                "content": "dạ anh",
+                "reply_to": "demo_msg_003"
+              },
+              {
+                "id": "demo_msg_005",
+                "author": "T117-PHẠM THÀNH TRUNG-02949",
+                "timestamp": "2026-09-13T00:38:00+07:00",
+                "content": "Mình có group xin tập gym hay tham gia bơi ở trường k ạ ?",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_006",
+                "author": "T003-TRẦN THANH THÁI-02454",
+                "timestamp": "2026-09-13T08:55:00+07:00",
+                "content": ".",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_007",
+                "author": "T132-BÙI TRỌNG TRỊNH-02861",
+                "timestamp": "2026-09-13T09:05:00+07:00",
+                "content": "@Nguyen Hai Dang Cho mình hỏi là: Email cá nhân nhận lịch mã số 02, sau đó nhận thêm mã số 03. Còn email outlook thì ngược lại nhận lịch mã số 03, sau đó nhận mã số 02. Vậy mình nên học theo lịch nào?",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_008",
+                "author": "T056-NGUYỄN ĐÌNH KHANG-02584",
+                "timestamp": "2026-09-13T09:12:00+07:00",
+                "content": "Bạn dùng lịch có chữ UPDATED á",
+                "reply_to": "demo_msg_007"
+              },
+              {
+                "id": "demo_msg_009",
+                "author": "T132-BÙI TRỌNG TRỊNH-02861",
+                "timestamp": "2026-09-13T09:14:00+07:00",
+                "content": "lịch outlook có chữ updated nhưng ngày 10/9, lịch trong gmail ko có nhưng gửi ngày 11/9, vậy thì theo lịch này vậy ạ",
+                "reply_to": "demo_msg_008"
+              },
+              {
+                "id": "demo_msg_010",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T10:07:00+07:00",
+                "content": "theo updated nhé Trịnh",
+                "reply_to": "demo_msg_009"
+              },
+              {
+                "id": "demo_msg_011",
+                "author": "T097-PHÙNG THÀNH AN-03006",
+                "timestamp": "2026-09-13T10:19:00+07:00",
+                "content": "e đăng nhập vào zoom để tối nay workshop mà cứ báo như này thì tối e đăng nhập bằng mail cá nhân rồi đổi tên theo quy định được không ạ? hay có cách nào để khắc phục lỗi này k ạ",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_012",
+                "author": "Vonhatcuong",
+                "timestamp": "2026-09-13T10:24:00+07:00",
+                "content": "Vào bằng mail cá nhân nhé không dùng mail của trường đâu nha\nmai cá nhân các bạn dùng để nhận mail của trường ấy",
+                "reply_to": "demo_msg_011"
+              },
+              {
+                "id": "demo_msg_013",
+                "author": "T042-NGUYỄN MẠNH CƯỜNG-02650",
+                "timestamp": "2026-09-13T12:13:00+07:00",
+                "content": "em ké câu hỏi ạ",
+                "reply_to": "demo_msg_005"
+              },
+              {
+                "id": "demo_msg_014",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T12:23:00+07:00",
+                "content": "k nhá Cường ơi, Cường xem bài các tiện ích học viên trên fb nhé",
+                "reply_to": "demo_msg_013"
+              },
+              {
+                "id": "demo_msg_015",
+                "author": "T042-NGUYỄN MẠNH CƯỜNG-02650",
+                "timestamp": "2026-09-13T12:26:00+07:00",
+                "content": "em thấy trước có bạn nào đăng bài gr fb có thông tin là thành lập clb là xin phép với bên trường là thông tin chính xác không ạ",
+                "reply_to": "demo_msg_014"
+              },
+              {
+                "id": "demo_msg_016",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T12:31:00+07:00",
+                "content": "k nhá, có btc rep ở dưới bài đó rùi nè",
+                "reply_to": "demo_msg_015"
+              }
+            ]
+          },
+          "latency_ms": 0.47
+        },
+        {
+          "step": 2,
+          "action_type": "LLM_RESPONSE",
+          "latency_ms": 907.74,
+          "usage": {
+            "input_tokens": 2244,
+            "output_tokens": 43
+          },
+          "tool_count": 0
+        },
+        {
+          "step": 2,
+          "action_type": "FINAL_ANSWER",
+          "output": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.\n\nTheo dữ liệu ngày 2026-09-13, Lab Coach Hoàng Blue's đã hướng dẫn nên theo lịch có chữ \"UPDATED\" [demo_msg_010].",
+          "source_ids": [
+            "demo_msg_010"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "TC03",
+      "query": "Ngày 2026-09-13, đăng nhập Zoom bằng email nào?",
+      "status": "SUCCESS",
+      "answer": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.\n\nNgày 2026-09-13, dữ liệu ghi nhận hướng dẫn dùng email cá nhân để đăng nhập Zoom [demo_msg_012].",
+      "events": [
+        {
+          "step": 1,
+          "action_type": "LLM_RESPONSE",
+          "latency_ms": 698.73,
+          "usage": {
+            "input_tokens": 538,
+            "output_tokens": 25
+          },
+          "tool_count": 1
+        },
+        {
+          "step": 1,
+          "action_type": "TOOL_EXECUTION",
+          "tool_name": "read_day",
+          "arguments": {
+            "day": "2026-09-13"
+          },
+          "observation": {
+            "status": "SUCCESS",
+            "day": "2026-09-13",
+            "source": "manual_screenshot_transcription",
+            "complete": false,
+            "coverage_start": "2026-09-13T00:08:00+07:00",
+            "coverage_end": "2026-09-13T12:31:00+07:00",
+            "messages": [
+              {
+                "id": "demo_msg_001",
+                "author": "T068-NGÔ ANH TÚ-02396",
+                "timestamp": "2026-09-13T00:08:00+07:00",
+                "content": "cho em hỏi Lab2 có được extend thời gian submit thêm không v ạ? Em lỡ nộp muộn 1phút không submit bài được ạ",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_002",
+                "author": "T048-NGUYỄN HUY HÙNG-02990",
+                "timestamp": "2026-09-13T00:09:00+07:00",
+                "content": "hic mình cũng thế",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_003",
+                "author": "Lab Coach — Sang Phan",
+                "timestamp": "2026-09-13T00:21:00+07:00",
+                "content": "Hùng với Tú chịu khó vào chỗ vlearn-support gửi ticket nhé",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_004",
+                "author": "T048-NGUYỄN HUY HÙNG-02990",
+                "timestamp": "2026-09-13T00:25:00+07:00",
+                "content": "dạ anh",
+                "reply_to": "demo_msg_003"
+              },
+              {
+                "id": "demo_msg_005",
+                "author": "T117-PHẠM THÀNH TRUNG-02949",
+                "timestamp": "2026-09-13T00:38:00+07:00",
+                "content": "Mình có group xin tập gym hay tham gia bơi ở trường k ạ ?",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_006",
+                "author": "T003-TRẦN THANH THÁI-02454",
+                "timestamp": "2026-09-13T08:55:00+07:00",
+                "content": ".",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_007",
+                "author": "T132-BÙI TRỌNG TRỊNH-02861",
+                "timestamp": "2026-09-13T09:05:00+07:00",
+                "content": "@Nguyen Hai Dang Cho mình hỏi là: Email cá nhân nhận lịch mã số 02, sau đó nhận thêm mã số 03. Còn email outlook thì ngược lại nhận lịch mã số 03, sau đó nhận mã số 02. Vậy mình nên học theo lịch nào?",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_008",
+                "author": "T056-NGUYỄN ĐÌNH KHANG-02584",
+                "timestamp": "2026-09-13T09:12:00+07:00",
+                "content": "Bạn dùng lịch có chữ UPDATED á",
+                "reply_to": "demo_msg_007"
+              },
+              {
+                "id": "demo_msg_009",
+                "author": "T132-BÙI TRỌNG TRỊNH-02861",
+                "timestamp": "2026-09-13T09:14:00+07:00",
+                "content": "lịch outlook có chữ updated nhưng ngày 10/9, lịch trong gmail ko có nhưng gửi ngày 11/9, vậy thì theo lịch này vậy ạ",
+                "reply_to": "demo_msg_008"
+              },
+              {
+                "id": "demo_msg_010",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T10:07:00+07:00",
+                "content": "theo updated nhé Trịnh",
+                "reply_to": "demo_msg_009"
+              },
+              {
+                "id": "demo_msg_011",
+                "author": "T097-PHÙNG THÀNH AN-03006",
+                "timestamp": "2026-09-13T10:19:00+07:00",
+                "content": "e đăng nhập vào zoom để tối nay workshop mà cứ báo như này thì tối e đăng nhập bằng mail cá nhân rồi đổi tên theo quy định được không ạ? hay có cách nào để khắc phục lỗi này k ạ",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_012",
+                "author": "Vonhatcuong",
+                "timestamp": "2026-09-13T10:24:00+07:00",
+                "content": "Vào bằng mail cá nhân nhé không dùng mail của trường đâu nha\nmai cá nhân các bạn dùng để nhận mail của trường ấy",
+                "reply_to": "demo_msg_011"
+              },
+              {
+                "id": "demo_msg_013",
+                "author": "T042-NGUYỄN MẠNH CƯỜNG-02650",
+                "timestamp": "2026-09-13T12:13:00+07:00",
+                "content": "em ké câu hỏi ạ",
+                "reply_to": "demo_msg_005"
+              },
+              {
+                "id": "demo_msg_014",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T12:23:00+07:00",
+                "content": "k nhá Cường ơi, Cường xem bài các tiện ích học viên trên fb nhé",
+                "reply_to": "demo_msg_013"
+              },
+              {
+                "id": "demo_msg_015",
+                "author": "T042-NGUYỄN MẠNH CƯỜNG-02650",
+                "timestamp": "2026-09-13T12:26:00+07:00",
+                "content": "em thấy trước có bạn nào đăng bài gr fb có thông tin là thành lập clb là xin phép với bên trường là thông tin chính xác không ạ",
+                "reply_to": "demo_msg_014"
+              },
+              {
+                "id": "demo_msg_016",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T12:31:00+07:00",
+                "content": "k nhá, có btc rep ở dưới bài đó rùi nè",
+                "reply_to": "demo_msg_015"
+              }
+            ]
+          },
+          "latency_ms": 0.43
+        },
+        {
+          "step": 2,
+          "action_type": "LLM_RESPONSE",
+          "latency_ms": 884.52,
+          "usage": {
+            "input_tokens": 2241,
+            "output_tokens": 36
+          },
+          "tool_count": 0
+        },
+        {
+          "step": 2,
+          "action_type": "FINAL_ANSWER",
+          "output": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.\n\nNgày 2026-09-13, dữ liệu ghi nhận hướng dẫn dùng email cá nhân để đăng nhập Zoom [demo_msg_012].",
+          "source_ids": [
+            "demo_msg_012"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "TC04",
+      "query": "Tổng hợp kênh ngày 2026-09-12.",
+      "status": "SUCCESS",
+      "answer": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.\n\nHệ thống lưu trữ dữ liệu ngày 2026-09-13 (chưa đủ cả ngày); không có dữ liệu ngày 2026-09-12. Tổng hợp các nội dung chính:\n\n- **Chủ đề chính**: Thắc mắc về hạn nộp Lab2, lịch học nhận qua email/outlook, cách đăng nhập Zoom workshop, và thông tin về câu lạc bộ/tiện ích thể thao.\n- **Hướng dẫn đã xác nhận**:\n  - Gửi ticket qua vlearn-support khi nộp bài Lab2 muộn (chưa xác nhận được gia hạn hay giải quyết lỗi) [demo_msg_003].\n  - Học viên theo dõi lịch học có chữ `UPDATED` [demo_msg_010].\n  - Vào Zoom bằng email cá nhân khi gặp lỗi đăng nhập [demo_msg_012].\n  - Tham khảo bài viết về tiện ích học viên trên Facebook về vấn đề CLB/thể thao [demo_msg_014], [demo_msg_016].\n- **Câu hỏi còn mở**: Chưa có.",
+      "events": [
+        {
+          "step": 1,
+          "action_type": "LLM_RESPONSE",
+          "latency_ms": 696.25,
+          "usage": {
+            "input_tokens": 534,
+            "output_tokens": 25
+          },
+          "tool_count": 1
+        },
+        {
+          "step": 1,
+          "action_type": "TOOL_EXECUTION",
+          "tool_name": "read_day",
+          "arguments": {
+            "day": "2026-09-13"
+          },
+          "observation": {
+            "status": "SUCCESS",
+            "day": "2026-09-13",
+            "source": "manual_screenshot_transcription",
+            "complete": false,
+            "coverage_start": "2026-09-13T00:08:00+07:00",
+            "coverage_end": "2026-09-13T12:31:00+07:00",
+            "messages": [
+              {
+                "id": "demo_msg_001",
+                "author": "T068-NGÔ ANH TÚ-02396",
+                "timestamp": "2026-09-13T00:08:00+07:00",
+                "content": "cho em hỏi Lab2 có được extend thời gian submit thêm không v ạ? Em lỡ nộp muộn 1phút không submit bài được ạ",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_002",
+                "author": "T048-NGUYỄN HUY HÙNG-02990",
+                "timestamp": "2026-09-13T00:09:00+07:00",
+                "content": "hic mình cũng thế",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_003",
+                "author": "Lab Coach — Sang Phan",
+                "timestamp": "2026-09-13T00:21:00+07:00",
+                "content": "Hùng với Tú chịu khó vào chỗ vlearn-support gửi ticket nhé",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_004",
+                "author": "T048-NGUYỄN HUY HÙNG-02990",
+                "timestamp": "2026-09-13T00:25:00+07:00",
+                "content": "dạ anh",
+                "reply_to": "demo_msg_003"
+              },
+              {
+                "id": "demo_msg_005",
+                "author": "T117-PHẠM THÀNH TRUNG-02949",
+                "timestamp": "2026-09-13T00:38:00+07:00",
+                "content": "Mình có group xin tập gym hay tham gia bơi ở trường k ạ ?",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_006",
+                "author": "T003-TRẦN THANH THÁI-02454",
+                "timestamp": "2026-09-13T08:55:00+07:00",
+                "content": ".",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_007",
+                "author": "T132-BÙI TRỌNG TRỊNH-02861",
+                "timestamp": "2026-09-13T09:05:00+07:00",
+                "content": "@Nguyen Hai Dang Cho mình hỏi là: Email cá nhân nhận lịch mã số 02, sau đó nhận thêm mã số 03. Còn email outlook thì ngược lại nhận lịch mã số 03, sau đó nhận mã số 02. Vậy mình nên học theo lịch nào?",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_008",
+                "author": "T056-NGUYỄN ĐÌNH KHANG-02584",
+                "timestamp": "2026-09-13T09:12:00+07:00",
+                "content": "Bạn dùng lịch có chữ UPDATED á",
+                "reply_to": "demo_msg_007"
+              },
+              {
+                "id": "demo_msg_009",
+                "author": "T132-BÙI TRỌNG TRỊNH-02861",
+                "timestamp": "2026-09-13T09:14:00+07:00",
+                "content": "lịch outlook có chữ updated nhưng ngày 10/9, lịch trong gmail ko có nhưng gửi ngày 11/9, vậy thì theo lịch này vậy ạ",
+                "reply_to": "demo_msg_008"
+              },
+              {
+                "id": "demo_msg_010",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T10:07:00+07:00",
+                "content": "theo updated nhé Trịnh",
+                "reply_to": "demo_msg_009"
+              },
+              {
+                "id": "demo_msg_011",
+                "author": "T097-PHÙNG THÀNH AN-03006",
+                "timestamp": "2026-09-13T10:19:00+07:00",
+                "content": "e đăng nhập vào zoom để tối nay workshop mà cứ báo như này thì tối e đăng nhập bằng mail cá nhân rồi đổi tên theo quy định được không ạ? hay có cách nào để khắc phục lỗi này k ạ",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_012",
+                "author": "Vonhatcuong",
+                "timestamp": "2026-09-13T10:24:00+07:00",
+                "content": "Vào bằng mail cá nhân nhé không dùng mail của trường đâu nha\nmai cá nhân các bạn dùng để nhận mail của trường ấy",
+                "reply_to": "demo_msg_011"
+              },
+              {
+                "id": "demo_msg_013",
+                "author": "T042-NGUYỄN MẠNH CƯỜNG-02650",
+                "timestamp": "2026-09-13T12:13:00+07:00",
+                "content": "em ké câu hỏi ạ",
+                "reply_to": "demo_msg_005"
+              },
+              {
+                "id": "demo_msg_014",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T12:23:00+07:00",
+                "content": "k nhá Cường ơi, Cường xem bài các tiện ích học viên trên fb nhé",
+                "reply_to": "demo_msg_013"
+              },
+              {
+                "id": "demo_msg_015",
+                "author": "T042-NGUYỄN MẠNH CƯỜNG-02650",
+                "timestamp": "2026-09-13T12:26:00+07:00",
+                "content": "em thấy trước có bạn nào đăng bài gr fb có thông tin là thành lập clb là xin phép với bên trường là thông tin chính xác không ạ",
+                "reply_to": "demo_msg_014"
+              },
+              {
+                "id": "demo_msg_016",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T12:31:00+07:00",
+                "content": "k nhá, có btc rep ở dưới bài đó rùi nè",
+                "reply_to": "demo_msg_015"
+              }
+            ]
+          },
+          "latency_ms": 0.68
+        },
+        {
+          "step": 2,
+          "action_type": "LLM_RESPONSE",
+          "latency_ms": 1927.15,
+          "usage": {
+            "input_tokens": 2237,
+            "output_tokens": 245
+          },
+          "tool_count": 0
+        },
+        {
+          "step": 2,
+          "action_type": "FINAL_ANSWER",
+          "output": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.\n\nHệ thống lưu trữ dữ liệu ngày 2026-09-13 (chưa đủ cả ngày); không có dữ liệu ngày 2026-09-12. Tổng hợp các nội dung chính:\n\n- **Chủ đề chính**: Thắc mắc về hạn nộp Lab2, lịch học nhận qua email/outlook, cách đăng nhập Zoom workshop, và thông tin về câu lạc bộ/tiện ích thể thao.\n- **Hướng dẫn đã xác nhận**:\n  - Gửi ticket qua vlearn-support khi nộp bài Lab2 muộn (chưa xác nhận được gia hạn hay giải quyết lỗi) [demo_msg_003].\n  - Học viên theo dõi lịch học có chữ `UPDATED` [demo_msg_010].\n  - Vào Zoom bằng email cá nhân khi gặp lỗi đăng nhập [demo_msg_012].\n  - Tham khảo bài viết về tiện ích học viên trên Facebook về vấn đề CLB/thể thao [demo_msg_014], [demo_msg_016].\n- **Câu hỏi còn mở**: Chưa có.",
+          "source_ids": [
+            "demo_msg_003",
+            "demo_msg_010",
+            "demo_msg_012",
+            "demo_msg_014",
+            "demo_msg_016"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "TC05",
+      "query": "Theo kênh ngày 2026-09-13, học phí khóa học là bao nhiêu?",
+      "status": "SUCCESS",
+      "answer": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.\n\nTheo dữ liệu kênh ngày 2026-09-13 (00:08–12:31), không có thông tin về học phí của khóa học [demo_msg_001 đến demo_msg_016].",
+      "events": [
+        {
+          "step": 1,
+          "action_type": "LLM_RESPONSE",
+          "latency_ms": 742.9,
+          "usage": {
+            "input_tokens": 541,
+            "output_tokens": 25
+          },
+          "tool_count": 1
+        },
+        {
+          "step": 1,
+          "action_type": "TOOL_EXECUTION",
+          "tool_name": "read_day",
+          "arguments": {
+            "day": "2026-09-13"
+          },
+          "observation": {
+            "status": "SUCCESS",
+            "day": "2026-09-13",
+            "source": "manual_screenshot_transcription",
+            "complete": false,
+            "coverage_start": "2026-09-13T00:08:00+07:00",
+            "coverage_end": "2026-09-13T12:31:00+07:00",
+            "messages": [
+              {
+                "id": "demo_msg_001",
+                "author": "T068-NGÔ ANH TÚ-02396",
+                "timestamp": "2026-09-13T00:08:00+07:00",
+                "content": "cho em hỏi Lab2 có được extend thời gian submit thêm không v ạ? Em lỡ nộp muộn 1phút không submit bài được ạ",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_002",
+                "author": "T048-NGUYỄN HUY HÙNG-02990",
+                "timestamp": "2026-09-13T00:09:00+07:00",
+                "content": "hic mình cũng thế",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_003",
+                "author": "Lab Coach — Sang Phan",
+                "timestamp": "2026-09-13T00:21:00+07:00",
+                "content": "Hùng với Tú chịu khó vào chỗ vlearn-support gửi ticket nhé",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_004",
+                "author": "T048-NGUYỄN HUY HÙNG-02990",
+                "timestamp": "2026-09-13T00:25:00+07:00",
+                "content": "dạ anh",
+                "reply_to": "demo_msg_003"
+              },
+              {
+                "id": "demo_msg_005",
+                "author": "T117-PHẠM THÀNH TRUNG-02949",
+                "timestamp": "2026-09-13T00:38:00+07:00",
+                "content": "Mình có group xin tập gym hay tham gia bơi ở trường k ạ ?",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_006",
+                "author": "T003-TRẦN THANH THÁI-02454",
+                "timestamp": "2026-09-13T08:55:00+07:00",
+                "content": ".",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_007",
+                "author": "T132-BÙI TRỌNG TRỊNH-02861",
+                "timestamp": "2026-09-13T09:05:00+07:00",
+                "content": "@Nguyen Hai Dang Cho mình hỏi là: Email cá nhân nhận lịch mã số 02, sau đó nhận thêm mã số 03. Còn email outlook thì ngược lại nhận lịch mã số 03, sau đó nhận mã số 02. Vậy mình nên học theo lịch nào?",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_008",
+                "author": "T056-NGUYỄN ĐÌNH KHANG-02584",
+                "timestamp": "2026-09-13T09:12:00+07:00",
+                "content": "Bạn dùng lịch có chữ UPDATED á",
+                "reply_to": "demo_msg_007"
+              },
+              {
+                "id": "demo_msg_009",
+                "author": "T132-BÙI TRỌNG TRỊNH-02861",
+                "timestamp": "2026-09-13T09:14:00+07:00",
+                "content": "lịch outlook có chữ updated nhưng ngày 10/9, lịch trong gmail ko có nhưng gửi ngày 11/9, vậy thì theo lịch này vậy ạ",
+                "reply_to": "demo_msg_008"
+              },
+              {
+                "id": "demo_msg_010",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T10:07:00+07:00",
+                "content": "theo updated nhé Trịnh",
+                "reply_to": "demo_msg_009"
+              },
+              {
+                "id": "demo_msg_011",
+                "author": "T097-PHÙNG THÀNH AN-03006",
+                "timestamp": "2026-09-13T10:19:00+07:00",
+                "content": "e đăng nhập vào zoom để tối nay workshop mà cứ báo như này thì tối e đăng nhập bằng mail cá nhân rồi đổi tên theo quy định được không ạ? hay có cách nào để khắc phục lỗi này k ạ",
+                "reply_to": null
+              },
+              {
+                "id": "demo_msg_012",
+                "author": "Vonhatcuong",
+                "timestamp": "2026-09-13T10:24:00+07:00",
+                "content": "Vào bằng mail cá nhân nhé không dùng mail của trường đâu nha\nmai cá nhân các bạn dùng để nhận mail của trường ấy",
+                "reply_to": "demo_msg_011"
+              },
+              {
+                "id": "demo_msg_013",
+                "author": "T042-NGUYỄN MẠNH CƯỜNG-02650",
+                "timestamp": "2026-09-13T12:13:00+07:00",
+                "content": "em ké câu hỏi ạ",
+                "reply_to": "demo_msg_005"
+              },
+              {
+                "id": "demo_msg_014",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T12:23:00+07:00",
+                "content": "k nhá Cường ơi, Cường xem bài các tiện ích học viên trên fb nhé",
+                "reply_to": "demo_msg_013"
+              },
+              {
+                "id": "demo_msg_015",
+                "author": "T042-NGUYỄN MẠNH CƯỜNG-02650",
+                "timestamp": "2026-09-13T12:26:00+07:00",
+                "content": "em thấy trước có bạn nào đăng bài gr fb có thông tin là thành lập clb là xin phép với bên trường là thông tin chính xác không ạ",
+                "reply_to": "demo_msg_014"
+              },
+              {
+                "id": "demo_msg_016",
+                "author": "Lab Coach - Hoàng Blue's",
+                "timestamp": "2026-09-13T12:31:00+07:00",
+                "content": "k nhá, có btc rep ở dưới bài đó rùi nè",
+                "reply_to": "demo_msg_015"
+              }
+            ]
+          },
+          "latency_ms": 1.2
+        },
+        {
+          "step": 2,
+          "action_type": "LLM_RESPONSE",
+          "latency_ms": 879.79,
+          "usage": {
+            "input_tokens": 2244,
+            "output_tokens": 56
+          },
+          "tool_count": 0
+        },
+        {
+          "step": 2,
+          "action_type": "FINAL_ANSWER",
+          "output": "Dữ liệu ảnh chụp 13/09/2026, 00:08–12:31 (giờ Việt Nam), chưa đủ cả ngày.\n\nTheo dữ liệu kênh ngày 2026-09-13 (00:08–12:31), không có thông tin về học phí của khóa học [demo_msg_001 đến demo_msg_016].",
+          "source_ids": [
+            "demo_msg_001",
+            "demo_msg_016"
+          ]
+        }
+      ]
+    }
+  ]
+}

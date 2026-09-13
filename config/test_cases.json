@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "summary",
+    "complexity": "Medium",
+    "question": "Tổng hợp kênh ngày 2026-09-13: chủ đề chính, hướng dẫn đã xác nhận, câu hỏi còn mở.",
+    "expected_behavior": "Đọc ngày demo; nêu vấn đề Lab2, lịch UPDATED, Zoom, gym/bơi; dẫn nguồn và ghi chưa đủ ngày."
+  },
+  {
+    "id": "TC02",
+    "type": "targeted_query",
+    "complexity": "Medium",
+    "question": "Ngày 2026-09-13, nên theo lịch UPDATED hay email gửi sau?",
+    "expected_behavior": "Dẫn demo_msg_010: coach xác nhận theo updated. Không tự suy ra mã lịch 02/03."
+  },
+  {
+    "id": "TC03",
+    "type": "targeted_query",
+    "complexity": "Medium",
+    "question": "Ngày 2026-09-13, đăng nhập Zoom bằng email nào?",
+    "expected_behavior": "Dẫn demo_msg_012: dùng email cá nhân nhận thư từ trường; không tự thêm quy định đổi tên."
+  },
+  {
+    "id": "TC04",
+    "type": "missing_date",
+    "complexity": "Low",
+    "question": "Tổng hợp kênh ngày 2026-09-12.",
+    "expected_behavior": "NO_DATA: không có bản dữ liệu ngày này, không kết luận Discord không có tin."
+  },
+  {
+    "id": "TC05",
+    "type": "out_of_data",
+    "complexity": "Medium",
+    "question": "Theo kênh ngày 2026-09-13, học phí khóa học là bao nhiêu?",
+    "expected_behavior": "Đọc dữ liệu rồi nói chưa đủ thông tin; không bịa số tiền."
+  }
+]
