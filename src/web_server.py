@@ -77,13 +77,14 @@ def _sanitize_events(events):
         out.append(entry)
     return out
 
-def summarize(force=False):
+def summarize(query=DEFAULT_QUERY, force=False):
     with LOCK:
-        if not force:
+        is_default = (query == DEFAULT_QUERY)
+        if is_default and not force:
             cached = cached_summary()
             if cached:
                 return cached
-        if CACHE.exists():
+        if is_default and CACHE.exists():
             try:
                 CACHE.unlink()
             except Exception:
@@ -92,9 +93,9 @@ def summarize(force=False):
         provider = get_demo_provider("gemini")
         events_raw = []
         try:
-            result = run_react_agent(DEFAULT_QUERY, provider)
+            result = run_react_agent(query, provider)
             events_raw = result.get("events", [])
-            folder = save_results([{"id": "UI_SUMMARY", "query": DEFAULT_QUERY, **result}], provider)
+            folder = save_results([{"id": "UI_QUERY" if not is_default else "UI_SUMMARY", "query": query, **result}], provider)
             trace_folder = folder.name
         except Exception as error:
             events_raw.append({"step": 1, "action_type": "ERROR", "output": str(error), "latency_ms": 0})
@@ -116,7 +117,6 @@ def summarize(force=False):
 
         sanitized_events = _sanitize_events(events_raw)
         tool_count = sum(e.get("action_type") == "TOOL_EXECUTION" for e in events_raw)
-
         total_latency_ms = round(sum(e.get("latency_ms") or 0 for e in sanitized_events), 2)
 
         if result.get("status") != "SUCCESS":
@@ -137,11 +137,12 @@ def summarize(force=False):
 
         data = {
             "success": True,
+            "query": query,
             "summary": result["answer"],
             "provider": provider.name,
             "model": provider.model_name,
             "cached": False,
-            "cache_key": cache_key(),
+            "cache_key": cache_key() if is_default else None,
             "usage": usage,
             "generated_at": datetime.now().isoformat(),
             "tool_calls": tool_count,
@@ -149,8 +150,9 @@ def summarize(force=False):
             "trace_folder": trace_folder,
             "events": sanitized_events
         }
-        CACHE.parent.mkdir(parents=True, exist_ok=True)
-        CACHE.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+        if is_default:
+            CACHE.parent.mkdir(parents=True, exist_ok=True)
+            CACHE.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
         return data
 
 class Handler(BaseHTTPRequestHandler):
@@ -193,20 +195,19 @@ class Handler(BaseHTTPRequestHandler):
         allowed_origins = {f"http://127.0.0.1:{self.server.server_port}", f"http://localhost:{self.server.server_port}"}
         if not self.local_request() or origin not in allowed_origins:
             return self.send(403, {"error": "Origin not allowed."})
-        if self.path != "/api/summarize":
+        if self.path not in ("/api/summarize", "/api/chat"):
             return self.send(404, {"error": "Not found."})
         if self.headers.get("Content-Type", "").split(";")[0] != "application/json":
             return self.send(415, {"error": "Expected JSON."})
         try:
             size = int(self.headers.get("Content-Length", "0"))
-            if not 0 <= size <= 1024:
+            if not 0 <= size <= 2048:
                 return self.send(400, {"error": "Invalid request size."})
             body = json.loads(self.rfile.read(size)) if size > 0 else {}
             force = body.get("force", False) is True
-            if set(body.keys()) - {"force"}:
-                return self.send(400, {"error": "Demo chỉ tổng hợp bản dữ liệu đã lưu."})
+            query = body.get("query", "").strip() or DEFAULT_QUERY
             
-            res = summarize(force=force)
+            res = summarize(query=query, force=force)
             return self.send(200, res)
         except Exception as error:
             self.send(500, {

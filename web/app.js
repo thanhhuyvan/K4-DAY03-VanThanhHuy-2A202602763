@@ -44,7 +44,7 @@ document.querySelectorAll('.panel-tab').forEach(tab => {
   tab.onclick = () => switchTab(tab.dataset.tab);
 });
 
-/* ===== Messages ===== */
+/* ===== Messages List ===== */
 function showMessages() {
   $('messageList').replaceChildren();
   snapshot.messages.forEach(m => {
@@ -74,6 +74,25 @@ function jump(id) {
   setTimeout(() => target.classList.remove('highlight'), 2500);
 }
 
+function formatCitations(rawText) {
+  const container = document.createDocumentFragment();
+  rawText.split(/(demo_msg_\d+|\*\*[^*]+\*\*|`[^`]+`)/g).forEach(part => {
+    const id = part.match(/^(demo_msg_\d+)$/)?.[1];
+    if (id && snapshot && snapshot.messages.some(m => m.id === id)) {
+      const link = node('button', 'source-link', part);
+      link.onclick = () => jump(id);
+      container.append(link);
+    } else if (part.startsWith('**') && part.endsWith('**')) {
+      container.append(node('strong', '', part.slice(2, -2)));
+    } else if (part.startsWith('`') && part.endsWith('`')) {
+      container.append(node('code', '', part.slice(1, -1)));
+    } else {
+      container.append(document.createTextNode(part));
+    }
+  });
+  return container;
+}
+
 /* ===== Trace log rendering ===== */
 function renderTrace(events, totalLatencyMs) {
   const body = $('traceBody');
@@ -85,7 +104,6 @@ function renderTrace(events, totalLatencyMs) {
   }
   $('traceCount').textContent = events.length;
 
-  // Header stats for trace
   const totalLat = totalLatencyMs || events.reduce((sum, e) => sum + (e.latency_ms || 0), 0);
   const headerCard = node('div', '', '');
   headerCard.style.cssText = 'padding: 8px 12px; margin-bottom: 12px; background: rgba(99,145,255,0.06); border: 1px solid var(--border-glow); border-radius: var(--radius-sm); font-size: 11.5px; color: var(--text-secondary); display: flex; justify-content: space-between; align-items: center;';
@@ -102,7 +120,6 @@ function renderTrace(events, totalLatencyMs) {
     step.className = 'trace-step';
     step.style.animationDelay = (i * 0.04) + 's';
 
-    // Dot column
     const dotCol = node('div', 'trace-dot-col');
     let dotType = 'llm';
     if (ev.type === 'TOOL_EXECUTION') dotType = 'tool';
@@ -112,7 +129,6 @@ function renderTrace(events, totalLatencyMs) {
     if (i < events.length - 1) dotCol.append(node('div', 'trace-line'));
     step.append(dotCol);
 
-    // Content
     const content = node('div', 'trace-content');
     const label = node('div', 'trace-label');
     const typeSpan = node('span', 'type ' + dotType);
@@ -187,38 +203,21 @@ function renderSummary(result) {
   summary = result;
   $('summaryBody').replaceChildren();
   const text = node('div', 'summary-text');
-
-  result.summary.split(/(demo_msg_\d+|\*\*[^*]+\*\*|`[^`]+`)/g).forEach(part => {
-    const id = part.match(/^(demo_msg_\d+)$/)?.[1];
-    if (id && snapshot.messages.some(m => m.id === id)) {
-      const link = node('button', 'source-link', part);
-      link.onclick = () => jump(id);
-      text.append(link);
-    } else if (part.startsWith('**') && part.endsWith('**')) {
-      text.append(node('strong', '', part.slice(2, -2)));
-    } else if (part.startsWith('`') && part.endsWith('`')) {
-      text.append(node('code', '', part.slice(1, -1)));
-    } else {
-      text.append(document.createTextNode(part));
-    }
-  });
+  text.append(formatCitations(result.summary));
 
   $('summaryBody').append(text);
   $('downloadBtn').disabled = false;
   $('regenBtn').style.display = '';
   $('generateBtn').textContent = '✓ Đã tóm tắt';
 
-  // Total latency
   const totalLatMs = result.total_latency_ms || (result.events || []).reduce((s, e) => s + (e.latency_ms || 0), 0);
   const latDisplay = fmtLatency(totalLatMs);
 
-  // Status bar latency badge
   if (latDisplay) {
     $('latencyBadge').textContent = '⏱ ' + latDisplay;
     $('latencyBadge').style.display = '';
   }
 
-  // Always render trace log
   renderTrace(result.events || [], totalLatMs);
 
   const meta = result.cached ? 'Bản lưu Cache' : 'Vừa tạo trực tiếp';
@@ -227,15 +226,17 @@ function renderSummary(result) {
   $('genMeta').textContent = `${meta}${latStr} · ${result.tool_calls || 0} tool calls${tokens}`;
 }
 
-/* ===== Generate / Regenerate ===== */
+/* ===== Generate / Regenerate Summary ===== */
 async function generate(force = false) {
   if (busy || !snapshot) return;
   if (!force && summary && summary.success !== false) {
+    switchTab('summary');
     $('summaryBody').scrollTop = 0;
     return;
   }
 
   busy = true;
+  switchTab('summary');
   $('generateBtn').disabled = true;
   $('regenBtn').style.display = 'none';
   $('generateBtn').textContent = force ? '⟳ Đang chạy lại…' : '⏳ Đang phân tích…';
@@ -246,7 +247,6 @@ async function generate(force = false) {
     (force ? 'Đang gửi yêu cầu và chạy lại ReAct Agent…' : 'AI đang đọc dữ liệu qua MCP Server…');
   $('summaryBody').replaceChildren(loadingEl);
 
-  // Show live loading state in Trace tab
   $('traceBody').innerHTML = '<div class="trace-empty"><div class="spinner" style="margin:0 auto"></div><div style="margin-top:10px">ReAct Agent đang suy luận và gọi Tool…</div></div>';
   $('traceCount').textContent = '...';
 
@@ -271,6 +271,76 @@ async function generate(force = false) {
     $('generateBtn').disabled = false;
   }
 }
+
+/* ===== Chatbot Agent ===== */
+async function sendChatMessage(queryText) {
+  const q = (queryText || $('chatInput').value || '').trim();
+  if (!q || busy) return;
+
+  $('chatInput').value = '';
+  busy = true;
+  $('chatSendBtn').disabled = true;
+
+  // Add User bubble
+  const userMsg = node('div', 'chat-msg user');
+  userMsg.append(node('span', 'chat-sender', 'BẠN'));
+  const userBubble = node('div', 'chat-bubble', q);
+  userMsg.append(userBubble);
+  $('chatList').append(userMsg);
+
+  // Add Bot Loading bubble
+  const botMsg = node('div', 'chat-msg bot');
+  botMsg.append(node('span', 'chat-sender', 'AI REACT AGENT'));
+  const botBubble = node('div', 'chat-bubble');
+  botBubble.innerHTML = '<span class="spinner"></span> <em>Đang tra cứu dữ liệu kênh…</em>';
+  botMsg.append(botBubble);
+  $('chatList').append(botMsg);
+  $('chatList').scrollTop = $('chatList').scrollHeight;
+
+  // Loading in trace
+  $('traceBody').innerHTML = '<div class="trace-empty"><div class="spinner" style="margin:0 auto"></div><div style="margin-top:10px">ReAct Agent đang xử lý: <code>' + q.slice(0, 30) + '...</code></div></div>';
+  $('traceCount').textContent = '...';
+
+  try {
+    const res = await api('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: q })
+    });
+
+    botBubble.replaceChildren();
+    if (res.success === false) {
+      botBubble.append(node('span', 'error-text', '⚠ ' + (res.error || 'Không thể trả lời.')));
+    } else {
+      botBubble.append(formatCitations(res.summary));
+    }
+
+    const latMs = res.total_latency_ms || 0;
+    const metaLine = node('div', 'chat-meta', `⏱ ${fmtLatency(latMs) || '—'} · ${res.tool_calls || 0} tool calls`);
+    botMsg.append(metaLine);
+
+    renderTrace(res.events || [], latMs);
+  } catch (error) {
+    botBubble.replaceChildren(node('span', 'error-text', '⚠ ' + error.message));
+    renderTrace(error.events || [{ type: 'ERROR', message: error.message }], error.total_latency_ms);
+  } finally {
+    busy = false;
+    $('chatSendBtn').disabled = false;
+    $('chatList').scrollTop = $('chatList').scrollHeight;
+  }
+}
+
+$('chatForm').onsubmit = e => {
+  e.preventDefault();
+  sendChatMessage();
+};
+
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.onclick = () => {
+    switchTab('chat');
+    sendChatMessage(chip.dataset.query);
+  };
+});
 
 $('generateBtn').onclick = () => generate(false);
 $('regenBtn').onclick = () => generate(true);
@@ -305,6 +375,7 @@ async function init() {
     $('count').textContent = snapshot.messages.length + ' msgs';
     $('modelName').textContent = data.model || 'Gemini Flash Lite';
     $('generateBtn').disabled = !data.configured;
+    $('chatSendBtn').disabled = !data.configured;
     if (!data.configured) $('genMeta').textContent = '⚠ Chưa cấu hình API key';
     showMessages();
     const cache = await api('/api/summary');

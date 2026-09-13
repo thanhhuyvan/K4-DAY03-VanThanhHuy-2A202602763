@@ -2,9 +2,9 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Channel Digest — AI Discord Summarizer</title>
+<title>Channel Digest — AI Discord Summarizer & Chatbot</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="AI-powered Discord channel summarizer using ReAct Agent and MCP protocol">
+<meta name="description" content="AI-powered Discord channel summarizer and interactive agent chatbot using ReAct Agent and MCP protocol">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -69,12 +69,12 @@
   /* ===== Header ===== */
   header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 28px;
+    padding: 14px 28px;
     background: var(--bg-glass);
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
-  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
   .brand-icon {
     width: 36px; height: 36px; border-radius: 10px;
     background: linear-gradient(135deg, var(--accent), #8b5cf6);
@@ -83,13 +83,13 @@
     box-shadow: 0 4px 20px var(--accent-glow);
   }
   .brand h1 {
-    font-size: 17px; font-weight: 600; letter-spacing: -0.02em;
+    font-size: 16px; font-weight: 600; letter-spacing: -0.02em;
   }
-  .brand h1 span { color: var(--text-muted); font-weight: 400; margin-left: 8px; font-size: 13px; }
+  .brand h1 span { color: var(--text-muted); font-weight: 400; margin-left: 8px; font-size: 12.5px; }
   .header-actions { display: flex; gap: 8px; }
   .btn {
-    padding: 8px 16px; border-radius: var(--radius-sm);
-    font-size: 13px; font-weight: 500;
+    padding: 7px 14px; border-radius: var(--radius-sm);
+    font-size: 12.5px; font-weight: 500;
     background: var(--bg-glass-strong);
     border: 1px solid var(--border);
     color: var(--text-secondary);
@@ -109,11 +109,11 @@
 
   /* ===== Status bar ===== */
   .status-bar {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 28px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 28px;
     background: var(--bg);
     border-bottom: 1px solid var(--border);
-    font-size: 12.5px;
+    font-size: 12px;
   }
   .status-dot {
     width: 8px; height: 8px; border-radius: 50%;
@@ -125,7 +125,7 @@
   .status-text strong { color: var(--text); font-weight: 600; }
   .badge {
     font-family: var(--mono); font-size: 10.5px;
-    padding: 3px 10px; border-radius: 20px;
+    padding: 3px 9px; border-radius: 20px;
     border: 1px solid var(--border);
     color: var(--text-muted);
     background: var(--bg-glass);
@@ -135,15 +135,15 @@
   /* ===== Main content ===== */
   .main {
     flex: 1; display: grid;
-    grid-template-columns: 1fr 440px;
+    grid-template-columns: 1fr 460px;
     min-height: 0;
   }
   @media (max-width: 900px) {
     .main { grid-template-columns: 1fr; }
-    .right-panel { border-left: none; border-top: 1px solid var(--border); min-height: 450px; }
+    .right-panel { border-left: none; border-top: 1px solid var(--border); min-height: 480px; }
   }
 
-  /* ===== Right panel (Summary + Trace) ===== */
+  /* ===== Right panel (Summary + Chat + Trace) ===== */
   .right-panel {
     border-left: 1px solid var(--border);
     background: var(--bg-glass);
@@ -155,26 +155,28 @@
   /* Tabs */
   .panel-tabs {
     display: flex; border-bottom: 1px solid var(--border);
-    background: rgba(15, 18, 25, 0.3);
+    background: rgba(15, 18, 25, 0.4);
   }
   .panel-tab {
-    flex: 1; padding: 12px 16px;
-    font-size: 13px; font-weight: 500;
+    flex: 1; padding: 11px 12px;
+    font-size: 12.5px; font-weight: 500;
     color: var(--text-muted);
     border-bottom: 2px solid transparent;
     transition: all 0.2s ease;
     text-align: center;
     cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 4px;
   }
   .panel-tab:hover { color: var(--text-secondary); }
   .panel-tab.active {
     color: var(--text);
     border-bottom-color: var(--accent);
+    background: rgba(99,145,255,0.04);
   }
   .panel-tab .tab-count {
-    font-family: var(--mono); font-size: 10px;
+    font-family: var(--mono); font-size: 9.5px;
     background: var(--bg-glass-strong); border-radius: 10px;
-    padding: 1px 7px; margin-left: 6px;
+    padding: 1px 6px;
     color: var(--text-muted);
   }
 
@@ -184,7 +186,7 @@
 
   /* Summary body */
   .summary-body {
-    flex: 1; overflow-y: auto; padding: 24px;
+    flex: 1; overflow-y: auto; padding: 22px;
   }
   .summary-body::-webkit-scrollbar { width: 4px; }
   .summary-body::-webkit-scrollbar-track { background: transparent; }
@@ -193,28 +195,28 @@
   /* Welcome state */
   .welcome {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; height: 100%; gap: 16px;
+    text-align: center; height: 100%; gap: 14px;
     animation: fadeIn 0.6s ease;
   }
   .welcome-icon {
-    width: 64px; height: 64px; border-radius: 16px;
+    width: 56px; height: 56px; border-radius: 14px;
     background: linear-gradient(135deg, rgba(99,145,255,0.15), rgba(139,92,246,0.15));
-    display: grid; place-items: center; font-size: 28px;
+    display: grid; place-items: center; font-size: 26px;
     border: 1px solid rgba(99,145,255,0.1);
   }
-  .welcome h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
-  .welcome p { color: var(--text-secondary); font-size: 13px; max-width: 280px; line-height: 1.7; }
+  .welcome h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; }
+  .welcome p { color: var(--text-secondary); font-size: 12.5px; max-width: 280px; line-height: 1.6; }
   .welcome-features {
-    display: flex; flex-direction: column; gap: 8px; margin-top: 8px;
-    font-size: 12.5px; color: var(--text-muted);
+    display: flex; flex-direction: column; gap: 6px; margin-top: 6px;
+    font-size: 12px; color: var(--text-muted);
   }
   .welcome-features span::before { content: '→ '; color: var(--accent); }
 
   /* Summary text */
   .summary-text {
-    font-size: 14px; color: var(--text); line-height: 1.8;
+    font-size: 13.5px; color: var(--text); line-height: 1.8;
     white-space: pre-wrap; overflow-wrap: anywhere;
-    animation: slideUp 0.5s ease;
+    animation: slideUp 0.4s ease;
   }
   .summary-text strong { color: #fff; font-weight: 600; }
   .summary-text code {
@@ -223,12 +225,86 @@
     border-radius: 4px; color: var(--accent);
   }
   .source-link {
-    border: none; background: rgba(99,145,255,0.1);
+    border: none; background: rgba(99,145,255,0.12);
     color: var(--accent); font-family: var(--mono); font-size: 11px;
-    padding: 2px 8px; border-radius: 4px; cursor: pointer;
+    padding: 2px 7px; border-radius: 4px; cursor: pointer;
     transition: all 0.15s ease;
   }
-  .source-link:hover { background: rgba(99,145,255,0.2); color: #fff; }
+  .source-link:hover { background: rgba(99,145,255,0.25); color: #fff; }
+
+  /* ===== Chat tab ===== */
+  .chat-body {
+    flex: 1; overflow-y: auto; padding: 18px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .chat-body::-webkit-scrollbar { width: 4px; }
+  .chat-body::-webkit-scrollbar-track { background: transparent; }
+  .chat-body::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 4px; }
+
+  .chat-welcome {
+    text-align: center; color: var(--text-muted); font-size: 12.5px;
+    padding: 10px 0 16px;
+  }
+  .chat-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+    margin-top: 10px;
+  }
+  .chip {
+    font-size: 11.5px; padding: 5px 11px;
+    border-radius: 16px; background: var(--bg-glass-strong);
+    border: 1px solid var(--border); color: var(--text-secondary);
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .chip:hover {
+    border-color: var(--border-glow); color: var(--accent);
+    background: rgba(99,145,255,0.08); transform: translateY(-1px);
+  }
+
+  .chat-msg {
+    display: flex; flex-direction: column; gap: 4px;
+    animation: slideUp 0.3s ease;
+  }
+  .chat-msg.user { align-items: flex-end; }
+  .chat-msg.bot { align-items: flex-start; }
+  .chat-sender { font-size: 10.5px; font-weight: 600; color: var(--text-muted); font-family: var(--mono); }
+  .chat-bubble {
+    max-width: 92%; padding: 10px 14px; border-radius: 12px;
+    font-size: 13px; line-height: 1.6; word-break: break-word;
+  }
+  .chat-msg.user .chat-bubble {
+    background: linear-gradient(135deg, #4f73d9, #7048e8);
+    color: #fff; border-bottom-right-radius: 2px;
+  }
+  .chat-msg.bot .chat-bubble {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text); border-bottom-left-radius: 2px;
+  }
+  .chat-meta {
+    font-size: 10px; color: var(--text-muted); font-family: var(--mono);
+    margin-top: 2px; display: flex; gap: 8px;
+  }
+
+  .chat-input-panel {
+    padding: 12px 18px;
+    border-top: 1px solid var(--border);
+    background: rgba(15, 18, 25, 0.6);
+  }
+  .chat-form { display: flex; gap: 8px; }
+  .chat-input {
+    flex: 1; padding: 9px 14px; border-radius: var(--radius-sm);
+    background: var(--bg-input); border: 1px solid var(--border);
+    color: var(--text); font-size: 13px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .chat-input:focus { border-color: var(--accent); }
+  .chat-send-btn {
+    padding: 9px 16px; border-radius: var(--radius-sm);
+    background: var(--accent); color: #fff; font-weight: 600;
+    font-size: 13px; transition: all 0.2s;
+  }
+  .chat-send-btn:hover { background: #4f73d9; transform: translateY(-1px); }
+  .chat-send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
   /* ===== Trace Log ===== */
   .trace-body {
@@ -301,15 +377,15 @@
 
   /* Summary footer */
   .summary-footer {
-    padding: 16px 24px;
+    padding: 14px 20px;
     border-top: 1px solid var(--border);
     background: rgba(15, 18, 25, 0.5);
   }
   .summary-footer .btn-row { display: flex; gap: 8px; }
-  .summary-footer .btn-row .btn.primary { flex: 1; padding: 12px 16px; font-size: 14px; }
+  .summary-footer .btn-row .btn.primary { flex: 1; padding: 10px 16px; font-size: 13.5px; }
   .gen-meta {
     font-size: 11px; color: var(--text-muted); font-family: var(--mono);
-    margin-top: 10px; text-align: center;
+    margin-top: 8px; text-align: center;
   }
 
   /* ===== Messages panel (LEFT) ===== */
@@ -318,14 +394,14 @@
     background: var(--bg);
   }
   .messages-header {
-    padding: 20px 28px 14px;
+    padding: 16px 28px 12px;
     border-bottom: 1px solid var(--border);
     display: flex; align-items: center; justify-content: space-between;
   }
   .messages-header h2 { font-size: 15px; font-weight: 600; }
   .messages-header .meta { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
   .coverage-note {
-    font-size: 12px; color: var(--amber); padding: 10px 28px;
+    font-size: 12px; color: var(--amber); padding: 8px 28px;
     background: rgba(251,191,36,0.04);
     border-bottom: 1px solid var(--border);
     display: flex; align-items: center; gap: 8px;
@@ -369,27 +445,25 @@
 
   /* ===== Animations ===== */
   .spinner {
-    width: 18px; height: 18px;
+    width: 16px; height: 16px;
     border: 2px solid var(--border); border-top-color: var(--accent);
     border-radius: 50%; display: inline-block;
     animation: spin 0.7s linear infinite;
-    vertical-align: -3px; margin-right: 8px;
+    vertical-align: -2px; margin-right: 8px;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   @media (prefers-reduced-motion: reduce) {
-    .spinner, .welcome, .summary-text, .trace-step { animation: none; }
+    .spinner, .welcome, .summary-text, .trace-step, .chat-msg { animation: none; }
   }
 
   .loading-text {
-    color: var(--text-secondary); font-size: 13.5px;
+    color: var(--text-secondary); font-size: 13px;
     display: flex; align-items: center;
     animation: fadeIn 0.3s ease;
   }
-  .error-text { color: var(--red); font-size: 13px; animation: fadeIn 0.3s ease; }
-
-  input[type="checkbox"] { accent-color: var(--accent); }
+  .error-text { color: var(--red); font-size: 12.5px; animation: fadeIn 0.3s ease; }
 </style>
 </head>
 <body>
@@ -398,11 +472,11 @@
   <header>
     <div class="brand">
       <div class="brand-icon">≋</div>
-      <h1>Channel Digest <span>AI Summarizer</span></h1>
+      <h1>Channel Digest <span>AI ReAct Agent</span></h1>
     </div>
     <div class="header-actions">
-      <button class="btn" id="dataBtn" title="Export raw data">📥 Data</button>
-      <button class="btn" id="downloadBtn" disabled title="Export summary">📄 Summary</button>
+      <button class="btn" id="dataBtn" title="Xuất dữ liệu raw JSON">📥 Data</button>
+      <button class="btn" id="downloadBtn" disabled title="Xuất bản tóm tắt Markdown">📄 Markdown</button>
     </div>
   </header>
 
@@ -428,10 +502,11 @@
       <div class="message-list" id="messageList"></div>
     </section>
 
-    <!-- Right panel: Summary + Trace tabs -->
+    <!-- Right panel: Summary + Chatbot + Trace tabs -->
     <aside class="right-panel">
       <div class="panel-tabs">
         <button class="panel-tab active" data-tab="summary">✦ Summary</button>
+        <button class="panel-tab" data-tab="chat">💬 Chatbot</button>
         <button class="panel-tab" data-tab="trace">⚡ Trace Log <span class="tab-count" id="traceCount">0</span></button>
       </div>
 
@@ -449,6 +524,36 @@
             </div>
           </div>
         </div>
+        <div class="summary-footer">
+          <div class="btn-row">
+            <button class="btn primary" id="generateBtn" disabled>Tạo bản tóm tắt ✦</button>
+            <button class="btn" id="regenBtn" style="display:none" title="Tạo lại bản tóm tắt mới">⟳</button>
+          </div>
+          <div class="gen-meta" id="genMeta">Nhấn để AI phân tích hội thoại</div>
+        </div>
+      </div>
+
+      <!-- Chatbot tab -->
+      <div class="tab-content" id="tab-chat">
+        <div class="chat-body" id="chatList">
+          <div class="chat-welcome">
+            <div style="font-size: 24px; margin-bottom: 6px;">🤖</div>
+            <strong>Hỏi đáp trực tiếp với ReAct Agent</strong>
+            <p style="margin-top: 4px;">Agent sẽ đọc dữ liệu snapshot qua MCP Tool để trả lời chính xác kèm trích dẫn.</p>
+            <div class="chat-chips">
+              <button class="chip" data-query="Nộp Lab2 muộn xử lý thế nào?">Lab2 muộn?</button>
+              <button class="chip" data-query="Nên theo lịch UPDATED hay lịch gửi sau?">Lịch học?</button>
+              <button class="chip" data-query="Đăng nhập Zoom workshop bằng email nào?">Email Zoom?</button>
+              <button class="chip" data-query="Có group tập gym hay bơi ở trường không?">CLB bơi/gym?</button>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-panel">
+          <form class="chat-form" id="chatForm">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Hỏi Agent về kênh Discord (ví dụ: Ai hỏi về Zoom?)..." autocomplete="off">
+            <button type="submit" class="chat-send-btn" id="chatSendBtn">Gửi ➤</button>
+          </form>
+        </div>
       </div>
 
       <!-- Trace log tab -->
@@ -456,17 +561,9 @@
         <div class="trace-body" id="traceBody">
           <div class="trace-empty">
             <div class="icon">📋</div>
-            <div>Chưa có trace log<br>Nhấn tạo tóm tắt để xem quá trình AI suy luận</div>
+            <div>Chưa có trace log<br>Nhấn tóm tắt hoặc gửi câu hỏi chatbot để xem Agent suy luận</div>
           </div>
         </div>
-      </div>
-
-      <div class="summary-footer">
-        <div class="btn-row">
-          <button class="btn primary" id="generateBtn" disabled>Tạo bản tóm tắt ✦</button>
-          <button class="btn" id="regenBtn" style="display:none" title="Tạo lại bản tóm tắt mới">⟳</button>
-        </div>
-        <div class="gen-meta" id="genMeta">Nhấn để AI phân tích hội thoại</div>
       </div>
     </aside>
   </main>
